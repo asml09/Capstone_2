@@ -39,10 +39,21 @@ response = requests.get('https://api.clashroyale.com/v1/players/%23U200V9P', hea
 # print(dict(response.text['tag']))
 dic = json.loads(response.text)
 a = dic['currentDeck']
-for card in a:
+# del a[0]['iconUrls']
+dat = pd.DataFrame()
+for i, card in enumerate(a):
   del card['iconUrls']
-  dat = pd.DataFrame(card, index=[0])
-  print(dat)
+  if i == 0:
+    dat = pd.DataFrame(card, index = [0])
+  else:
+    # dat.append(pd.DataFrame(card))
+    dat = dat.merge(pd.DataFrame(card, index=[i]), how='outer')
+print(dat)
+
+# card = a[0]
+# del card['iconUrls']
+# dat = pd.DataFrame(card, index=[0])
+# dat.to_csv('data.csv')
 
 # dat = pd.DataFrame.from_dict(dic)
 # print(dat)
