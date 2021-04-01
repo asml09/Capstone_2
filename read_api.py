@@ -217,31 +217,21 @@ def get_Series(response):
         return ser
       else:
         pass
-    
-
-# ser1 = get_Series(response)
-# ser2 = get_Series(response2)
-# ser3 = get_Series(response3)
-# df = pd.concat([ser1, ser2, ser3], axis = 1).transpose()
-# df.index = [0, 1, 2]
-# print(df)
-
-df = pd.DataFrame()
-series = []
-for player in player_all_time:
-  url = 'https://api.clashroyale.com/v1/players/%23' + player
-  response = requests.get(url, headers=headers)
-  ser = get_Series(response)
-  if isinstance(ser, pd.Series):
-    ser = ser.append(pd.Series([player], index = ['tag']))
-    series.append(ser)
-df = pd.concat(series, axis = 1).transpose()
-df.index = list(range(len(series)))
-df.to_csv('decks.csv')
 
 
-
-
+# GET CSV FILE FOR DECKS
+# df = pd.DataFrame()
+# series = []
+# for player in player_all_time:
+#   url = 'https://api.clashroyale.com/v1/players/%23' + player
+#   response = requests.get(url, headers=headers)
+#   ser = get_Series(response)
+#   if isinstance(ser, pd.Series):
+#     ser = ser.append(pd.Series([player], index = ['tag']))
+#     series.append(ser)
+# df = pd.concat(series, axis = 1).transpose()
+# df.index = list(range(len(series)))
+# df.to_csv('decks.csv')
 
 
 # GET CSV FILE FOR EVERYTHING BUT DECKS
