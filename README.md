@@ -4,7 +4,11 @@ In Clash Royale, a player builds a deck before they enter the game. There are 10
 # The data
 Data was collected from a clash royale api and then stored in csv format. Each player is identified by a player tag. I collected the player tags of the top 100 players in the world, and 160 ordinary players. After I stored it in the csv, I read it into two dataframes. 
 
+Dataframe 1 
+<img src = "https://github.com/asml09/Capstone_2/blob/master/images/img1.png" > 
 
+Dataframe 2
+<img src = "https://github.com/asml09/Capstone_2/blob/master/images/im2.png" width="800" height="300" >
 
 # The game 
 
