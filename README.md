@@ -14,3 +14,32 @@ Dataframe 2
 
 ![example game play](https://j.gifs.com/P72nYn.gif)
 
+# Gradient Boosted Regressor 
+
+Predicts whether a player will win with a given deck. Predictors are the players deck, level, trophies, best trophies, win rate, and three crown win rate. Response is win rate
+The hyperparameters learning rate and number of estimators were explored.                                
+learning_rate = [.01, .02, .04, .05, .1, .2]                                                             
+n_estimators = [100, 200, 400, 500, 700]                                                                 
+Using a learning rate of 0.1 and 700 estimators resulted in the lowest mse = .00425
+
+<img src = "https://github.com/asml09/Capstone_2/blob/master/images/img3.png" >
+
+# Monte Carlo with gradient boosted regressor
+
+Predicts whether a given deck will win. Predictors for gradient model are the deck, response is win rate. 
+
+Pseudocode:                                                                                              
+  randomly generate a deck of 8 cards from the 102 cards available.   
+  use gradient model to predict win rate of deck                                                          
+  randomly choose one of the cards in the deck to exchange, and replace it with some other random card   
+  if this new deck has a higher predicted win rate, keep it as the new deck                               
+  if it doesn't, still accept it with some probability. This probability decreases as the number of       iterations increases
+  
+  <img src = "https://github.com/asml09/Capstone_2/blob/master/images/img6.png" width = "400" height = "450" >
+  
+ With 100,000 iterations, the best deck found was :
+
+<img src = "https://github.com/asml09/Capstone_2/blob/master/images/img7.png" width = "500" height = "350" >
+  
+  
+  
