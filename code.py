@@ -55,7 +55,7 @@ for rate in learning_rate:
         dic[rate, estimator] = mse
 print(mse)
 
-fig, ax = plt.subplots(2, 3, figsize = (8, 8))
+fig, ax = plt.subplots(2, 3, figsize = (20, 8), constrained_layout = True)
 for i in range(3):
     y = []
     for item in n_estimators:
@@ -63,6 +63,8 @@ for i in range(3):
     ax[0, i].plot(n_estimators, y)
     ax[0, i].set_xticks(n_estimators)
     ax[0, i].legend(['mse with learning rate ' + str(learning_rate[i])])
+    plt.xticks(fontsize = 7)
+    plt.legend(prop = {'size' : 7})
 for i in range(3):
     y = []
     for item in n_estimators:
@@ -70,8 +72,20 @@ for i in range(3):
     ax[1, i].plot(n_estimators, y)
     ax[1, i].set_xticks(n_estimators)
     ax[1, i].legend(['mse with learning rate ' + str(learning_rate[i+3])])
+    plt.xticks(fontsize = 7)
+    plt.legend(prop = {'size' : 7})
+
+plt.xlabel('# estimators', fontsize = 7)
+plt.ylabel('mse', fontsize =7)
+plt.subplots_adjust(left=0.1,
+                    bottom=0.1, 
+                    right=0.9, 
+                    top=0.9, 
+                    wspace=0.4, 
+                    hspace=0.4)
 plt.tight_layout()
 plt.show()
+plt.savefig('img3.png')
 
 # VISUALS
 

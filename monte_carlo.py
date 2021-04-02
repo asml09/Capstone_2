@@ -8,6 +8,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 import random
 import math
+import matplotlib.pyplot as plt
 
 
 decks = pd.read_csv('decks.csv')
@@ -37,7 +38,6 @@ new_df = pd.concat([new_df, decks.iloc[:, 8]], axis = 1)
 def make_dummies(deck):
     df = pd.DataFrame(np.zeros((1, 102)), columns = dummy2.columns)
     cards = list(deck)
-    print(cards)
     for col in all_cards:
         if col in cards:
             df.loc[0][col] = 1.0
@@ -80,12 +80,22 @@ def initial_8():
 # keep track of all decks you get, keep track of how many times they appear. start w 1000, 
 # if it doesn't take forever Run > 1 million times
 # if decks are somewhat similar thats good too
-def monte_carlo(num_replacement, tau):
+def monte_carlo(num_replacement, tau_list):
+    list_y = []
     eight_cards, indices = initial_8()
     X_df = make_dummies(eight_cards)
     y_prev = model.predict(X_df)
     # 1 million timesish. 
+    tau = tau_list[0]
     for i in range(num_replacement):
+        if i == 2000:
+            tau = tau_list[1]
+        elif i == 4000:
+            tau = tau_list[2]
+        elif i == 6000:
+            tau = tau_list[3]
+        elif i == 8000:
+            tau = tau_list[4]
         # in eightcards, which card to omit
         index_toreplace = random.randint(0, 7)
         possible_index = [i for i in range(101) if i not in indices]
@@ -98,19 +108,26 @@ def monte_carlo(num_replacement, tau):
         y_pred = model.predict(X_df)
         ratio = y_prev / y_pred 
         # the case where y_pred is worse than y_prev
-        if ratio < 1:
+        if ratio > 1:
             rand = random.uniform(0, 1)
             adjusted_ratio = ratio * tau
-            if adjusted_ratio <= rand:
+            if rand <= adjusted_ratio:
                 eight_cards = possible_cards 
                 y_prev = y_pred
         else:
             eight_cards = possible_cards
             y_prev = y_pred
-    return eight_cards
-print(monte_carlo(100, 0.1))
-
-
+        list_y.append(y_prev)
+    return eight_cards, list_y
+eight_cards, list_y = monte_carlo(10000, [0.4, 0.3, 0.2, 0.1, 0.05])
+print(eight_cards)
+x = np.linspace(1, 10000, num = 10000)
+fig, ax = plt.subplots()
+ax.plot(x, list_y)
+ax.set_xlabel('number iterations')
+ax.set_ylabel('win rate')
+ax.set_title('monte carlo alogirthm over 10,000 iterations')
+plt.show()
 # markov chain monte carlo algorithm (Metropolis) - make model with one of the x predictors or combination of them. Choose 8 cards at
 # random, predit how good of a job you did. Randomly switch cards with something else. If it does better, accept
 # If it does worse, accept with some probability based on difference of how good you were before - now. 
