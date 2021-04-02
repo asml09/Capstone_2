@@ -76,3 +76,38 @@ for i in range(50):
 # # construct y from other variables 
 # y = data['win_ratio']
 # # print(data.shape)
+
+
+
+
+def monte_carlo(num_replacement, tau_list):
+    eight_cards, indices = initial_8()
+    X_df = make_dummies(eight_cards)
+    y_prev = model.predict(X_df) 
+    tau = tau_list[0]
+    j = 1
+    for i in range(num_replacement):
+        if i in (20000, 40000, 60000, 80000):
+          tau = tau_list[j]
+          j += 1
+        # in eightcards, which card to omit
+        index_toreplace = random.randint(0, 7)
+        possible_index = [i for i in range(101) if i not in indices]
+        new_index = random.sample(possible_index, k = 1)[0]
+        possible_cards = eight_cards.copy()
+        possible_cards[index_toreplace] = all_cards[new_index]
+        X_df = make_dummies(possible_cards)
+        y_pred = model.predict(X_df)
+        ratio = y_prev / y_pred 
+        # the case where y_pred is worse than y_prev, accept with some probability 
+        if ratio > 1:
+            rand = random.uniform(0, 1)
+            adjusted_ratio = ratio * tau
+            if rand <= adjusted_ratio:
+                eight_cards = possible_cards 
+                y_prev = y_pred
+        else:
+            eight_cards = possible_cards
+            y_prev = y_pred
+    return eight_cards
+eight_cards = monte_carlo(100000, [0.4, 0.3, 0.2, 0.1, 0.05])

@@ -88,13 +88,13 @@ def monte_carlo(num_replacement, tau_list):
     # 1 million timesish. 
     tau = tau_list[0]
     for i in range(num_replacement):
-        if i == 2000:
+        if i == 20000:
             tau = tau_list[1]
-        elif i == 4000:
+        elif i == 40000:
             tau = tau_list[2]
-        elif i == 6000:
+        elif i == 60000:
             tau = tau_list[3]
-        elif i == 8000:
+        elif i == 80000:
             tau = tau_list[4]
         # in eightcards, which card to omit
         index_toreplace = random.randint(0, 7)
@@ -119,14 +119,14 @@ def monte_carlo(num_replacement, tau_list):
             y_prev = y_pred
         list_y.append(y_prev)
     return eight_cards, list_y
-eight_cards, list_y = monte_carlo(10000, [0.4, 0.3, 0.2, 0.1, 0.05])
+eight_cards, list_y = monte_carlo(100000, [0.4, 0.3, 0.2, 0.1, 0.05])
 print(eight_cards)
-x = np.linspace(1, 10000, num = 10000)
+x = np.linspace(1, 100000, num = 100000)
 fig, ax = plt.subplots()
 ax.plot(x, list_y)
 ax.set_xlabel('number iterations')
 ax.set_ylabel('win rate')
-ax.set_title('monte carlo alogirthm over 10,000 iterations')
+ax.set_title('monte carlo alogirthm over 100,000 iterations')
 plt.show()
 # markov chain monte carlo algorithm (Metropolis) - make model with one of the x predictors or combination of them. Choose 8 cards at
 # random, predit how good of a job you did. Randomly switch cards with something else. If it does better, accept
@@ -163,5 +163,4 @@ plt.show()
         # if (y_pred > y_prev) or (prob_pred > prob_prev):
         #     indices[index_toreplace] = new_index
         #     eight_cards[index_toreplace] = all_cards[new_index]
-
 
