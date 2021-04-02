@@ -37,6 +37,12 @@ Pseudocode:
   
   <img src = "https://github.com/asml09/Capstone_2/blob/master/images/img6.png" width = "400" height = "450" >
   
+  <img src = "https://github.com/asml09/Capstone_2/blob/master/images/img4.png" width = "400" height = "300" > 
+  
+  <img src = "https://github.com/asml09/Capstone_2/blob/master/images/img5.png" width = "400" height = "300" >
+  
+  We can see that as the number of iterations increases, the jump in the win rate goes down as well. This is because the algorithm becomes stricter in selecting a new deck that had a worse win rate than the previous. Towards the beginning, there is a greater chance of selecting a worse deck to ensure that the algorithm does not get stuck in a local maximum. This parameter is called tau. I used the following tau values [0.4, 0.3, 0.2, 0.1, 0.05]. Tau starts at 0.4, and decreases every 20,000 iterations. 
+  
  With 100,000 iterations, the best deck found was :
 
 <img src = "https://github.com/asml09/Capstone_2/blob/master/images/img7.png" width = "500" height = "350" >
